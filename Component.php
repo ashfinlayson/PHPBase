@@ -25,6 +25,6 @@ class Component
      */
     public function isArrayWithData($array)
     {
-        return \JBGlobal\Components\Helpers\ArrayHelper::isArrayWithData($array);
+        return \ashfinlayson\base\components\helpers\ArrayHelper::isArrayWithData($array);
     }
 }
