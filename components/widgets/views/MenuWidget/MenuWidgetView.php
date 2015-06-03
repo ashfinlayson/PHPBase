@@ -1,6 +1,6 @@
 <?php
 
-use JBGlobal\Base\Html;
+use ashfinlayson\base\Html;
 
 if (count($this->menuItems)) {
     echo Html::tag('ul', array(

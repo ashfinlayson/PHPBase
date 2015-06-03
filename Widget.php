@@ -107,7 +107,7 @@ class Widget extends View
     
     /**
      * Returns the base path for widget views.
-     * Used by the parent class (JBGlobal\Base\View) to build
+     * Used by the parent class (ashfinlayson\base\View) to build
      * the path to the view file for rendering
      * @return String
      */
