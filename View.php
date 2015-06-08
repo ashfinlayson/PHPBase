@@ -17,6 +17,8 @@ class View extends Component
      */
     const FILE_SUFFIX = 'php';
     
+    protected $viewsPath = '/';
+    
     /**
      * Gets the file path references in $view param and passes to View::rebderViewFile
      * @param String $view (partial path to view file, excluding vews base path)
@@ -31,14 +33,20 @@ class View extends Component
     }
     
     /**
-     * Returns the path to the views directory.
-     * In the context of a widget this mothod is overridden by Widget::getViewsPath
-     * but is not currently used in the context of View::getViewsPath
+     * Public getter for views path.
      * @return string
      */
     public function getViewsPath()
     {
-        return '/';
+        return $this->viewsPath;
+    }
+    
+    /**
+     * Public setting view viewPath
+     */
+    public function setViewsPath($path)
+    {
+        $this->viewsPath = $path;
     }
     
     /**
