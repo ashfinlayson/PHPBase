@@ -3,9 +3,10 @@
 namespace ashfinlayson\base;
 
 /**
- * Wrapper class for Axelarge's HTML Helper
- *
- * @author Ashley Finlayson
+ * Html parser for PHP
+ * @title Html
+ * @author Ashley Finlayson <https://github.com/ashfinlayson/PHPBase>
+ * @description useful for generating HTML markup without having to dip in/out of PHP
  */
 class Html
 {
