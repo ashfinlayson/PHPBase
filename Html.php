@@ -22,40 +22,41 @@ class Html
     public static $hr = '<hr />';
     /**
      * Converts an array of HTML attributes to a string
-	 *
-	 * If an attribute is false or null, it will not be set.
-	 *
-	 * If an attribute is true or is passed without a key, it will
-	 * be set without an explicit value (useful for checked, disabled, ..)
-	 *
-	 * If an array is passed as a value, it will be joined using spaces
-	 *
-	 * Note: Starts with a space
-	 * <code>
-	 * Html::attributes(array('id' => 'some-id', 'selected' => false, 'disabled' => true, 'class' => array('a', 'b')));
-	 * //=> ' id="some-id" disabled class="a b"'
-	 * </code>
-	 *
-	 * @author axelarge https://github.com/axelarge/php-html-helpers
-	 * @param array $attributes Associative array of attributes
-	 *
-	 * @return string
-	 */
+     *
+     * If an attribute is false or null, it will not be set.
+     *
+     * If an attribute is true or is passed without a key, it will
+     * be set without an explicit value (useful for checked, disabled, ..)
+     *
+     * If an array is passed as a value, it will be joined using spaces
+     *
+     * Note: Starts with a space
+     * <code>
+     * Html::attributes(array('id' => 'some-id', 'selected' => false, 'disabled' => true, 'class' => array('a', 'b')));
+     * //=> ' id="some-id" disabled class="a b"'
+     * </code>
+     *
+     * @author axelarge https://github.com/axelarge/php-html-helpers
+     * @param array $attributes Associative array of attributes
+     *
+     * @return string
+     */
     public static function attributes(array $attributes)
     {
         $result = '';
         foreach ($attributes as $attribute => $value) {
-        if ($value === false || $value === null) continue;
-        if ($value === true) {
-            $result .= ' ' . $attribute;
-        } else if (is_numeric($attribute)) {
-            $result .= ' ' . $value;
-        } else {
-            if (is_array($value)) { // support cases like 'class' => array('one', 'two')
-                $value = implode(' ', $value);
+            if ($value === false || $value === null)
+                continue;
+            if ($value === true) {
+                $result .= ' ' . $attribute;
+            } else if (is_numeric($attribute)) {
+                $result .= ' ' . $value;
+            } else {
+                if (is_array($value)) { // support cases like 'class' => array('one', 'two')
+                    $value = implode(' ', $value);
+                }
+                $result .= ' ' . $attribute . '="' . static::escape($value) . '"';
             }
-            $result .= ' ' . $attribute . '="' . static::escape($value) . '"';
-        }
         }
         return $result;
     }
