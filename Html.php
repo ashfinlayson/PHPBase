@@ -9,7 +9,16 @@ namespace ashfinlayson\base;
  */
 class Html
 {
+    /**
+     * Generate a <br /> tag
+     * @type string
+     */
     public static $br = '<br />';
+    /**
+     * Generates a <hr /> tag
+     * @type string
+     */
+    public static $hr = '<hr />';
     /**
 	 * Converts an array of HTML attributes to a string
 	 *
