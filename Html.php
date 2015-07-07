@@ -21,7 +21,7 @@ class Html
      */
     public static $hr = '<hr />';
     /**
-	 * Converts an array of HTML attributes to a string
+     * Converts an array of HTML attributes to a string
 	 *
 	 * If an attribute is false or null, it will not be set.
 	 *
@@ -41,38 +41,36 @@ class Html
 	 *
 	 * @return string
 	 */
-	public static function attributes(array $attributes)
-	{
-		$result = '';
+    public static function attributes(array $attributes)
+    {
+        $result = '';
+        foreach ($attributes as $attribute => $value) {
+        if ($value === false || $value === null) continue;
+        if ($value === true) {
+            $result .= ' ' . $attribute;
+        } else if (is_numeric($attribute)) {
+            $result .= ' ' . $value;
+        } else {
+            if (is_array($value)) { // support cases like 'class' => array('one', 'two')
+                $value = implode(' ', $value);
+            }
+            $result .= ' ' . $attribute . '="' . static::escape($value) . '"';
+        }
+        }
+        return $result;
+    }
 
-		foreach ($attributes as $attribute => $value) {
-			if ($value === false || $value === null) continue;
-			if ($value === true) {
-				$result .= ' ' . $attribute;
-			} else if (is_numeric($attribute)) {
-				$result .= ' ' . $value;
-			} else {
-				if (is_array($value)) { // support cases like 'class' => array('one', 'two')
-					$value = implode(' ', $value);
-				}
-				$result .= ' ' . $attribute . '="' . static::escape($value) . '"';
-			}
-		}
-
-		return $result;
-	}
-
-	/**
-	 * Escapes a string for output in HTML
-	 * @author axelarge https://github.com/axelarge/php-html-helpers
-	 * @static
-	 * @param string $string
-	 * @return string
-	 */
-	public static function escape($string)
-	{
-		return htmlspecialchars($string, ENT_QUOTES, 'UTF-8');
-	}
+    /**
+     * Escapes a string for output in HTML
+     * @author axelarge https://github.com/axelarge/php-html-helpers
+     * @static
+     * @param string $string
+     * @return string
+     */
+    public static function escape($string)
+    {
+        return htmlspecialchars($string, ENT_QUOTES, 'UTF-8');
+    }
     /**
      * Returns an opening tag for an html element with attributes
      * @param String $tagName
