@@ -7,7 +7,7 @@ use ashfinlayson\base\Html;
 /**
  * Wrapper class for Axelarge's PHP form parser
  *
- * @author Ashley Finlayson
+ * @author Ashley Finlayson <https://github.com/ashfinlayson>
  */
 class Form
 {
