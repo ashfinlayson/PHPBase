@@ -53,6 +53,7 @@ class View extends Component
      * public constructor
      * @param string|null $viewPath path to the views directory used in this instance 
      * @param object|null $context instance of application or controller that is instantiating the view renderer
+     * @param string|null $fileSuffix override default file suffix
      */
     public function __construct($viewPath = null, $context = null, $fileSuffix = null)
     {
@@ -74,7 +75,7 @@ class View extends Component
      * @param String $view (partial path to view file, excluding vews base path)
      * @param Array $params
      */
-    public function render($view, $params = array())
+    public function render($view, $params = [])
     {
         // Create path to php file
         $file = $this->getViewPath() . $view . '.' . $this->getFileSuffix();
@@ -142,7 +143,7 @@ class View extends Component
      * @param Array $params
      * @return String (view file's output)
      */
-    public function renderViewFile($file, $params = array())
+    public function renderViewFile($file, $params = [])
     {
         // New output buffer
         ob_start();
