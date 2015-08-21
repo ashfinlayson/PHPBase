@@ -3,11 +3,33 @@
 namespace ashfinlayson\base;
 
 /**
- * View object. Currently this is just used to render view files
- * in the context of a Widget. But should be used as a base for views
- * when moving forward with MVC.
- *
- * @author Ashley Finlayson
+ * @title View
+ * @author Ashley Finlayson <ash.finlayson@gmail.com> <github.com/ashfinlayson>
+ * @description View rendering class for returning the content view file as a string
+ * 
+ * 
+ * @param string    $viewPath                The path to the views directory
+ * @param mixed     $context    optional     Instance of application, controller etc
+ * 
+ * @usage
+ * 
+ *      // Instantiate 
+ *      $view = new View('/path/to/views/directory);
+ *      $view->setContext($yourControllerInstance);
+ * 
+ *      // Render a view
+ *      echo $view->render('your-view-file', [
+ *          'youParamName' => 'your param value',
+ *          'SomeParamsArray' => ['some', 'values', 'here'],
+ *      ]);
+ * 
+ *      // Fetch values from outside of scope
+ *      echo $this->getContext()->pagetitle
+ * 
+ * @scope View
+ * - You can call $this->render() to render a view inside a view
+ * - Call $this->getContext() to fetch a value from outside of scope:
+ *      eg. echo $this->getContext()->pagetitle;
  */
 class View extends Component
 {
@@ -15,42 +37,107 @@ class View extends Component
      * Default file suffix for view files to be rendered
      * @type String
      */
-    const FILE_SUFFIX = 'php';
+    protected $fileSuffix = 'php';
+    /**
+     * Path to views directory
+     * @var string
+     */
+    protected $viewPath = '/';
+    /**
+     * Instance of controller/application
+     * @var mixed
+     */
+    protected $context = null;
     
-    protected $viewsPath = '/';
+    /**
+     * public constructor
+     * @param string|null $viewPath path to the views directory used in this instance 
+     * @param object|null $context instance of application or controller that is instantiating the view renderer
+     */
+    public function __construct($viewPath = null, $context = null, $fileSuffix = null)
+    {
+        if ($viewPath) {
+            $this->setViewPath($viewPath);
+        }
+        
+        if ($context) {
+            $this->setContext($context);
+        }
+        
+        if ($fileSuffix) {
+            $this->setFileSuffix($fileSuffix);
+        }
+    }
     
     /**
      * Gets the file path references in $view param and passes to View::rebderViewFile
      * @param String $view (partial path to view file, excluding vews base path)
      * @param Array $params
      */
-    public function renderView($view, $params = array())
+    public function render($view, $params = array())
     {
         // Create path to php file
-        $file = $this->getViewsPath() . $view .'.'.self::FILE_SUFFIX;
+        $file = $this->getViewPath() . $view . '.' . $this->getFileSuffix();
         // Render view file
-        echo $this->renderViewFile($file, $params);
+        return $this->renderViewFile($file, $params);
     }
     
     /**
-     * Public getter for views path.
+     * Public getter for $viewPath.
      * @return string
      */
-    public function getViewsPath()
+    public function getViewPath()
     {
-        return $this->viewsPath;
+        return $this->viewPath;
     }
     
     /**
-     * Public setting view viewPath
+     * Public setter for $viewPath
+     * @param string $path
      */
-    public function setViewsPath($path)
+    public function setViewPath($path)
     {
-        $this->viewsPath = $path;
+        $this->viewPath = $path;
     }
     
     /**
-     * Render a PHP file with passed params array
+     * Public settfor for $context
+     * @param mixed $value
+     */
+    public function setContext($context)
+    {
+        $this->context = $context;
+    }
+    
+    /**
+     * Public getter for $context
+     * @return mixed
+     */
+    public function getContext()
+    {
+        return $this->context;
+    }
+    
+    /**
+     * Public setter for $fileSuffix
+     * @param string $fileSuffix
+     */
+    public function setFileSuffix($fileSuffix)
+    {
+        $this->fileSuffix = $fileSuffix;
+    }
+    
+    /**
+     * Public getter for $fileSuffix
+     * @return string
+     */
+    public function getFileSuffix()
+    {
+        return $this->fileSuffix;
+    }
+    
+    /**
+     * Render a file with passed params array
      * @param String $file (full path to view file) 
      * @param Array $params
      * @return String (view file's output)
